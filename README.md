@@ -153,7 +153,7 @@ $this->assertTrue($client->getResponse()->isNotFound());
 $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
 # Assert that the response is a redirect to /site/contact
-$this->assertTrue($client->getResponse()->isRedirect('/site/contact'));
+$this->assertTrue($client->getResponse()->isRedirect(Yii::app()->createAbsoluteUrl('/site/contact')));
 # or simply check that the response is a redirect to any URL
 $this->assertTrue($client->getResponse()->isRedirect());
 ```
@@ -399,7 +399,7 @@ $info = $crawler->extract(array('_text', 'href'));
 # Executes a lambda for each node and return an array of results
 $data = $crawler->each(function ($node, $i)
 {
-    return $node->attr('href');
+    return $node->getAttribute('href');
 });
 ```
 

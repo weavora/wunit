@@ -8,8 +8,16 @@
 class FormTest extends \PHPUnit_Framework_TestCase
 {
 
+	protected static $wunit;
+
+	public static function setUpBeforeClass()
+	{
+		static::$wunit = new WUnit();
+		static::$wunit->init();
+	}
+
 	public function testOne()
 	{
-
+		$this->markTestIncomplete();
 	}
 }

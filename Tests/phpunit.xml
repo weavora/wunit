@@ -1,7 +1,10 @@
 <phpunit bootstrap="bootstrap.php"
-		colors="false"
 		convertErrorsToExceptions="true"
 		convertNoticesToExceptions="true"
 		convertWarningsToExceptions="true"
-		stopOnFailure="false">
+		printerClass="WUnit_ResultPrinter"
+		stopOnFailure="false"
+		verbose="true"
+		strict="true"
+		>
 </phpunit>

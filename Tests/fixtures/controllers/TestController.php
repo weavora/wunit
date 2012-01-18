@@ -6,6 +6,9 @@ class TestController extends CController
 
 	public function actionIndex()
 	{
+		$this->layout = 'main';
+		header('Content-type: text/html');
+
 //		throw new Exception("dam!!");
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
@@ -22,9 +25,6 @@ class TestController extends CController
 			$model->attributes=$_POST['ContactForm'];
 			if($model->validate())
 			{
-				$headers="From: {$model->email}\r\nReply-To: {$model->email}";
-				mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
 				$this->refresh();
 			}
 		}
@@ -64,5 +64,10 @@ class TestController extends CController
 	{
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
+	}
+
+	public function actionRedirect()
+	{
+		$this->redirect(Yii::app()->createUrl('test/index'));
 	}
 }
