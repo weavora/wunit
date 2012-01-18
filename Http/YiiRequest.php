@@ -64,8 +64,8 @@ class YiiRequest extends \CHttpRequest {
 
 	public function inject($getParams, $postParams, $serverParams)
 	{
-		$this->_getParams = $getParams;
-		$this->_postParams = $postParams;
+		$this->_getParams = $_GET = $getParams;
+		$this->_postParams = $_POST = $postParams;
 		$this->_serverParams = $serverParams;
 
 		if (empty($this->_serverParams['PHP_SELF'])) {
@@ -75,6 +75,10 @@ class YiiRequest extends \CHttpRequest {
 		if (empty($this->_serverParams['SCRIPT_FILENAME'])) {
 			$this->_serverParams['SCRIPT_FILENAME'] = \Yii::getPathOfAlias('application') . '/../index.php';
 		}
+
+		$_SERVER = $this->_serverParams;
+		$_REQUEST = array_merge($_GET, $_POST);
+
 		parent::init();
 	}
 
