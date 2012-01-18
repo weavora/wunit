@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\Process;
+namespace Symfony\Component\Process;
 
 /**
  * An executable finder specifically designed for the PHP executable.
@@ -33,6 +33,10 @@ class PhpExecutableFinder
      */
     public function find()
     {
+        if (defined('PHP_BINARY') && PHP_BINARY) {
+            return PHP_BINARY;
+        }
+
         if ($php = getenv('PHP_PATH')) {
             if (!is_executable($php)) {
                 return false;

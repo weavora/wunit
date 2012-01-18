@@ -3,24 +3,20 @@
 namespace WUnit\Http;
 
 use WUnit\HttpKernel\HttpKernelInterface;
-use WUnit\HttpFoundation\Request;
-use WUnit\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
  
 class YiiKernel implements HttpKernelInterface
 {
 	
 	public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 	{
-		
+
 		$app = $this->createYiiApp();
 		$app->setComponent('request',new YiiRequest());
 		$app->request->inject($request->query->all(), $request->request->all(), $request->server->all());
-//		$app->attachEventHandler('onEndRequest', function($event) {
-//
-//		});
 
 		$statusCode = 200;
-		
 
 		ob_start();
 		try {

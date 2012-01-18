@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\CssSelector;
+namespace Symfony\Component\CssSelector;
 
-use WUnit\CssSelector\Exception\ParseException;
+use Symfony\Component\CssSelector\Exception\ParseException;
 
 /**
  * CssSelector is the main entry point of the component and can convert CSS

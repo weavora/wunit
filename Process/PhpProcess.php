@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\Process;
+namespace Symfony\Component\Process;
 
 /**
  * PhpProcess runs a PHP script in an independent process.

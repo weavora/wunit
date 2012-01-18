@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\CssSelector;
+namespace Symfony\Component\CssSelector;
 
-use WUnit\CssSelector\Exception\ParseException;
+use Symfony\Component\CssSelector\Exception\ParseException;
 
 /**
  * Tokenizer lexes a CSS Selector to tokens.

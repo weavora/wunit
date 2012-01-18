@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\BrowserKit;
+namespace Symfony\Component\BrowserKit;
 
 /**
  * Request object.

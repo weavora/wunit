@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\CssSelector\Node;
+namespace Symfony\Component\CssSelector\Node;
 
-use WUnit\CssSelector\XPathExpr;
-use WUnit\CssSelector\Exception\ParseException;
+use Symfony\Component\CssSelector\XPathExpr;
+use Symfony\Component\CssSelector\Exception\ParseException;
 
 /**
  * AttribNode represents a "selector[namespace|attrib operator value]" node.

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation;
+namespace Symfony\Component\HttpFoundation;
 
 /**
  * HeaderBag is a container for HTTP headers.

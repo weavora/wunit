@@ -11,14 +11,14 @@
 
 namespace WUnit\HttpKernel;
 
-use WUnit\HttpFoundation\File\UploadedFile;
-use WUnit\HttpFoundation\Request;
-use WUnit\BrowserKit\Client as BaseClient;
-use WUnit\BrowserKit\Request as DomRequest;
-use WUnit\BrowserKit\Response as DomResponse;
-use WUnit\BrowserKit\Cookie as DomCookie;
-use WUnit\BrowserKit\History;
-use WUnit\BrowserKit\CookieJar;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\BrowserKit\Client as BaseClient;
+use Symfony\Component\BrowserKit\Request as DomRequest;
+use Symfony\Component\BrowserKit\Response as DomResponse;
+use Symfony\Component\BrowserKit\Cookie as DomCookie;
+use Symfony\Component\BrowserKit\History;
+use Symfony\Component\BrowserKit\CookieJar;
 
 /**
  * Client simulates a browser and makes requests to a Kernel object.

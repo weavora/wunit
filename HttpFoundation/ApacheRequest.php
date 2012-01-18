@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation;
+namespace Symfony\Component\HttpFoundation;
 
 /**
  * Request represents an HTTP request from an Apache server.
@@ -46,6 +46,6 @@ class ApacheRequest extends Request
      */
     protected function preparePathInfo()
     {
-        return $this->server->get('PATH_INFO');
+        return $this->server->get('PATH_INFO') ?: substr($this->prepareRequestUri(), strlen($this->prepareBaseUrl())) ?: '/';
     }
 }

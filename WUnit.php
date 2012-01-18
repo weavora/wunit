@@ -13,7 +13,7 @@ class WUnit extends CComponent
 		error_reporting(E_ERROR);
 
 		// @todo implement autoloader
-		$basePath = Yii::getPathOfAlias('application.tests.components.wunit');
+		$basePath = dirname(__FILE__);
 		$files = array_merge(
 			array(
 				$basePath . '/CssSelector/Node/NodeInterface.php',

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\CssSelector\Node;
+namespace Symfony\Component\CssSelector\Node;
 
 /**
  * ClassNode represents a "selector.className" node.

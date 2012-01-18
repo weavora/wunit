@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\DomCrawler;
+namespace Symfony\Component\DomCrawler;
 
-use WUnit\DomCrawler\Field\FormField;
+use Symfony\Component\DomCrawler\Field\FormField;
 
 /**
  * Form represents an HTML form.
@@ -381,7 +381,7 @@ class Form extends Link implements \ArrayAccess
                     throw new \LogicException('The selected node does not have a form ancestor.');
                 }
             } while ('form' != $node->nodeName);
-        } else {
+        } elseif('form' != $node->nodeName) {
             throw new \LogicException(sprintf('Unable to submit on a "%s" tag.', $node->nodeName));
         }
 

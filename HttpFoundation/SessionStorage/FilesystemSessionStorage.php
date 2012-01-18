@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation\SessionStorage;
+namespace Symfony\Component\HttpFoundation\SessionStorage;
 
 /**
  * FilesystemSessionStorage simulates sessions for functional tests.
@@ -23,8 +23,25 @@ namespace WUnit\HttpFoundation\SessionStorage;
  */
 class FilesystemSessionStorage extends NativeSessionStorage
 {
+    /**
+     * File path.
+     *
+     * @var string
+     */
     private $path;
+
+    /**
+     * Data.
+     *
+     * @var array
+     */
     private $data;
+
+    /**
+     * Session started flag.
+     *
+     * @var boolean
+     */
     private $started;
 
     /**
@@ -67,7 +84,7 @@ class FilesystemSessionStorage extends NativeSessionStorage
 
         $file = $this->path.'/'.session_id().'.session';
 
-        $this->data = file_exists($file) ? unserialize(file_get_contents($file)) : array();
+        $this->data = is_file($file) ? unserialize(file_get_contents($file)) : array();
         $this->started = true;
     }
 

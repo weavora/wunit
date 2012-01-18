@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\CssSelector\Node;
+namespace Symfony\Component\CssSelector\Node;
 
-use WUnit\CssSelector\XPathExpr;
+use Symfony\Component\CssSelector\XPathExpr;
 
 /**
  * ElementNode represents a "namespace|element" node.

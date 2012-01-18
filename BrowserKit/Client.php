@@ -9,16 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\BrowserKit;
+namespace Symfony\Component\BrowserKit;
 
-use WUnit\DomCrawler\Crawler;
-use WUnit\DomCrawler\Link;
-use WUnit\DomCrawler\Form;
-use WUnit\BrowserKit\Request;
-use WUnit\BrowserKit\Response;
-use WUnit\BrowserKit\Client;
-use WUnit\Process\Process;
-use WUnit\Process\PhpProcess;
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\DomCrawler\Link;
+use Symfony\Component\DomCrawler\Form;
+use Symfony\Component\Process\PhpProcess;
+use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\BrowserKit\Response;
+use Symfony\Component\BrowserKit\Client;
 
 /**
  * Client simulates a browser.
@@ -85,7 +84,7 @@ abstract class Client
      */
     public function insulate($insulated = true)
     {
-        if (!class_exists('WUnit\\Process\\Process')) {
+        if (!class_exists('Symfony\\Component\\Process\\Process')) {
             // @codeCoverageIgnoreStart
             throw new \RuntimeException('Unable to isolate requests as the Symfony Process Component is not installed.');
             // @codeCoverageIgnoreEnd
@@ -125,6 +124,7 @@ abstract class Client
      *
      * @param string $key     A key of the parameter to get
      * @param string $default A default value when key is undefined
+     *
      * @return string A value of the parameter
      */
     public function getServerParameter($key, $default = '')
@@ -214,6 +214,8 @@ abstract class Client
      * @param Form  $form   A Form instance
      * @param array $values An array of form field values
      *
+     * @return Crawler
+     *
      * @api
      */
     public function submit(Form $form, array $values = array())
@@ -265,7 +267,7 @@ abstract class Client
 
         $response = $this->filterResponse($this->response);
 
-        $this->cookieJar->updateFromResponse($response, $uri);
+        $this->cookieJar->updateFromResponse($response);
 
         $this->redirect = $response->getHeader('Location');
 
@@ -292,7 +294,7 @@ abstract class Client
         $process->run();
 
         if (!$process->isSuccessful() || !preg_match('/^O\:\d+\:/', $process->getOutput())) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new \RuntimeException('OUTPUT: '.$process->getOutput().' ERROR OUTPUT: '.$process->getErrorOutput());
         }
 
         return unserialize($process->getOutput());
@@ -348,9 +350,9 @@ abstract class Client
     /**
      * Creates a crawler.
      *
-     * @param string $uri A uri
+     * @param string $uri     A uri
      * @param string $content Content for the crawler to use
-     * @param string $type Content type
+     * @param string $type    Content type
      *
      * @return Crawler
      */
@@ -433,12 +435,13 @@ abstract class Client
      * Takes a URI and converts it to absolute if it is not already absolute.
      *
      * @param string $uri A uri
+     *
      * @return string An absolute uri
      */
     protected function getAbsoluteUri($uri)
     {
         // already absolute?
-        if ('http' === substr($uri, 0, 4)) {
+        if (0 === strpos($uri, 'http')) {
             return $uri;
         }
 

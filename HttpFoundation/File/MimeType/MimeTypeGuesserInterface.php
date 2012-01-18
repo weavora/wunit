@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation\File\MimeType;
+namespace Symfony\Component\HttpFoundation\File\MimeType;
 
 /**
  * Guesses the mime type of a file
@@ -19,10 +19,12 @@ namespace WUnit\HttpFoundation\File\MimeType;
 interface MimeTypeGuesserInterface
 {
     /**
-     * Guesses the mime type of the file with the given path
+     * Guesses the mime type of the file with the given path.
      *
      * @param  string $path   The path to the file
+     *
      * @return string         The mime type or NULL, if none could be guessed
+     *
      * @throws FileNotFoundException  If the file does not exist
      * @throws AccessDeniedException  If the file could not be read
      */

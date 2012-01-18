@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation;
+namespace Symfony\Component\HttpFoundation;
 
-use WUnit\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * FileBag is a container for HTTP headers.
@@ -39,7 +39,7 @@ class FileBag extends ParameterBag
 
     /**
      * (non-PHPdoc)
-     * @see WUnit\HttpFoundation\ParameterBag::replace()
+     * @see Symfony\Component\HttpFoundation\ParameterBag::replace()
      *
      * @api
      */
@@ -51,7 +51,7 @@ class FileBag extends ParameterBag
 
     /**
      * (non-PHPdoc)
-     * @see WUnit\HttpFoundation\ParameterBag::set()
+     * @see Symfony\Component\HttpFoundation\ParameterBag::set()
      *
      * @api
      */
@@ -66,7 +66,7 @@ class FileBag extends ParameterBag
 
     /**
      * (non-PHPdoc)
-     * @see WUnit\HttpFoundation\ParameterBag::add()
+     * @see Symfony\Component\HttpFoundation\ParameterBag::add()
      *
      * @api
      */
@@ -122,6 +122,7 @@ class FileBag extends ParameterBag
      * just returns the original array unmodified.
      *
      * @param  array $data
+     *
      * @return array
      */
     protected function fixPhpFilesArray($data)

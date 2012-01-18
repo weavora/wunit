@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation;
+namespace Symfony\Component\HttpFoundation;
 
 /**
  * ParameterBag is a container for key/value pairs.
@@ -20,6 +20,11 @@ namespace WUnit\HttpFoundation;
  */
 class ParameterBag
 {
+    /**
+     * Parameter storage.
+     *
+     * @var array
+     */
     protected $parameters;
 
     /**
@@ -86,8 +91,8 @@ class ParameterBag
      * Returns a parameter by name.
      *
      * @param string  $path    The key
-     * @param mixed   $default The default value
-     * @param boolean $deep
+     * @param mixed   $default The default value if the parameter key does not exist
+     * @param boolean $deep If true, a path like foo[bar] will find deeper items
      *
      * @api
      */
@@ -113,7 +118,7 @@ class ParameterBag
                 }
 
                 $currentKey = '';
-            } else if (']' === $char) {
+            } elseif (']' === $char) {
                 if (null === $currentKey) {
                     throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "]" at position %d.', $i));
                 }
@@ -183,8 +188,8 @@ class ParameterBag
      * Returns the alphabetic characters of the parameter value.
      *
      * @param string  $key     The parameter key
-     * @param mixed   $default The default value
-     * @param boolean $deep
+     * @param mixed   $default The default value if the parameter key does not exist
+     * @param boolean $deep If true, a path like foo[bar] will find deeper items
      *
      * @return string The filtered value
      *
@@ -199,8 +204,8 @@ class ParameterBag
      * Returns the alphabetic characters and digits of the parameter value.
      *
      * @param string  $key     The parameter key
-     * @param mixed   $default The default value
-     * @param boolean $deep
+     * @param mixed   $default The default value if the parameter key does not exist
+     * @param boolean $deep If true, a path like foo[bar] will find deeper items
      *
      * @return string The filtered value
      *
@@ -215,8 +220,8 @@ class ParameterBag
      * Returns the digits of the parameter value.
      *
      * @param string  $key     The parameter key
-     * @param mixed   $default The default value
-     * @param boolean $deep
+     * @param mixed   $default The default value if the parameter key does not exist
+     * @param boolean $deep If true, a path like foo[bar] will find deeper items
      *
      * @return string The filtered value
      *
@@ -231,8 +236,8 @@ class ParameterBag
      * Returns the parameter value converted to integer.
      *
      * @param string  $key     The parameter key
-     * @param mixed   $default The default value
-     * @param boolean $deep
+     * @param mixed   $default The default value if the parameter key does not exist
+     * @param boolean $deep If true, a path like foo[bar] will find deeper items
      *
      * @return string The filtered value
      *
@@ -241,5 +246,35 @@ class ParameterBag
     public function getInt($key, $default = 0, $deep = false)
     {
         return (int) $this->get($key, $default, $deep);
+    }
+
+    /**
+     * Filter key.
+     *
+     * @param string  $key     Key.
+     * @param mixed   $default Default = null.
+     * @param boolean $deep    Default = false.
+     * @param integer $filter  FILTER_* constant.
+     * @param mixed   $options Filter options.
+     *
+     * @see http://php.net/manual/en/function.filter-var.php
+     *
+     * @return mixed
+     */
+    public function filter($key, $default = null, $deep = false, $filter=FILTER_DEFAULT, $options=array())
+    {
+        $value = $this->get($key, $default, $deep);
+
+        // Always turn $options into an array - this allows filter_var option shortcuts.
+        if (!is_array($options) && $options) {
+            $options = array('flags' => $options);
+        }
+
+        // Add a convenience check for arrays.
+        if (is_array($value) && !isset($options['flags'])) {
+            $options['flags'] = FILTER_REQUIRE_ARRAY;
+        }
+
+        return filter_var($value, $filter, $options);
     }
 }

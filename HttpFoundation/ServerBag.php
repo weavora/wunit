@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation;
+namespace Symfony\Component\HttpFoundation;
 
 /**
  * ServerBag is a container for HTTP headers from the $_SERVER variable.
@@ -19,6 +19,11 @@ namespace WUnit\HttpFoundation;
  */
 class ServerBag extends ParameterBag
 {
+    /**
+     * Gets the HTTP headers.
+     *
+     * @return string
+     */
     public function getHeaders()
     {
         $headers = array();

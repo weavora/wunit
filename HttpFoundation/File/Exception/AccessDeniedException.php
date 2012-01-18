@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation\File\Exception;
+namespace Symfony\Component\HttpFoundation\File\Exception;
 
 /**
  * Thrown when the access on a file was denied.

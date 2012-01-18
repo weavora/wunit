@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\CssSelector;
+namespace Symfony\Component\CssSelector;
 
 /**
  * XPathExpr represents an XPath expression.

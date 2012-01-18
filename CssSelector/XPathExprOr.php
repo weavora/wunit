@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\CssSelector;
+namespace Symfony\Component\CssSelector;
 
 /**
  * XPathExprOr represents XPath |'d expressions.
@@ -42,7 +42,7 @@ class XPathExprOr extends XPathExpr
      */
     public function __toString()
     {
-        $prefix = $this->prefix;
+        $prefix = $this->getPrefix();
 
         $tmp = array();
         foreach ($this->items as $i) {

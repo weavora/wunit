@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation\File\Exception;
+namespace Symfony\Component\HttpFoundation\File\Exception;
 
 /**
  * Thrown when a file was not found

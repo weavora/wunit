@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\DomCrawler\Field;
+namespace Symfony\Component\DomCrawler\Field;
 
 /**
  * FormField is the abstract class for all form fields.

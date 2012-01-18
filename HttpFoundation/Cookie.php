@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation;
+namespace Symfony\Component\HttpFoundation;
 
 /**
  * Represents a cookie
@@ -48,10 +48,6 @@ class Cookie
             throw new \InvalidArgumentException(sprintf('The cookie name "%s" contains invalid characters.', $name));
         }
 
-        if (preg_match("/[,; \t\r\n\013\014]/", $value)) {
-            throw new \InvalidArgumentException(sprintf('The cookie value "%s" contains invalid characters.', $value));
-        }
-
         if (empty($name)) {
             throw new \InvalidArgumentException('The cookie name cannot be empty.');
         }
@@ -71,7 +67,7 @@ class Cookie
         $this->value = $value;
         $this->domain = $domain;
         $this->expire = $expire;
-        $this->path = $path;
+        $this->path = empty($path) ? '/' : $path;
         $this->secure = (Boolean) $secure;
         $this->httpOnly = (Boolean) $httpOnly;
     }
@@ -90,8 +86,8 @@ class Cookie
             }
         }
 
-        if (null !== $this->getPath()) {
-            $str .= '; path='.$this->getPath();
+        if ('/' !== $this->path) {
+            $str .= '; path='.$this->path;
         }
 
         if (null !== $this->getDomain()) {

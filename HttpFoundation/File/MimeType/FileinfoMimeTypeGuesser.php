@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation\File\MimeType;
+namespace Symfony\Component\HttpFoundation\File\MimeType;
 
-use WUnit\HttpFoundation\File\Exception\FileNotFoundException;
-use WUnit\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 /**
  * Guesses the mime type using the PECL extension FileInfo

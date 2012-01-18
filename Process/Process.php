@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\Process;
+namespace Symfony\Component\Process;
 
 /**
  * Process is a thin wrapper around proc_* functions to ease

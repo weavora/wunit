@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\CssSelector\Node;
+namespace Symfony\Component\CssSelector\Node;
 
-use WUnit\CssSelector\XPathExprOr;
+use Symfony\Component\CssSelector\XPathExprOr;
 
 /**
  * OrNode represents a "Or" node.

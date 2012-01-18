@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace WUnit\HttpFoundation\File;
+namespace Symfony\Component\HttpFoundation\File;
 
-use WUnit\HttpFoundation\File\Exception\FileException;
-use WUnit\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
  * A file uploaded through a form.
@@ -100,9 +100,7 @@ class UploadedFile extends File
         $this->error = $error ?: UPLOAD_ERR_OK;
         $this->test = (Boolean) $test;
 
-        if (UPLOAD_ERR_OK === $this->error) {
-            parent::__construct($path);
-        }
+        parent::__construct($path, UPLOAD_ERR_OK === $this->error);
     }
 
     /**
