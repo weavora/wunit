@@ -11,8 +11,9 @@ namespace WUnit\Http;
 
 class YiiRequest extends \CHttpRequest {
 
-	public function inject()
+	public function inject($files = array())
 	{
+		$_FILES = $this->filterFiles($files);
 		if (empty($_SERVER['PHP_SELF'])) {
 			$_SERVER['PHP_SELF'] = '/index.php';
 		}
@@ -27,6 +28,27 @@ class YiiRequest extends \CHttpRequest {
 		if($this->enableCsrfValidation)
 			Yii::app()->attachEventHandler('onBeginRequest',array($this, 'validateCsrfToken'));
 	}
+
+	protected function filterFiles(array $files)
+    {
+        $filtered = array();
+        foreach ($files as $key => $value) {
+            if (is_array($value)) {
+                $filtered[$key] = $this->filterFiles($value);
+            } elseif(is_object($value)){
+                    $filtered[$key] = array(
+                        'tmp_name' => $value->getPathname(),
+                        'name' => $value->getClientOriginalName(),
+                        'type' => $value->getClientMimeType(),
+                        'size' => $value->getClientSize(),
+                        'error' => $value->getError(),
+                    );
+                
+            } 
+        }
+
+        return $filtered;
+    }
 }
 
 

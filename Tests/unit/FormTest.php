@@ -36,10 +36,9 @@ class FormTest extends \PHPUnit_Framework_TestCase
 		$form['FullForm[textArea]'] = "TextArea";
 
 
-		$filePath = dirname(__FILE__).'/../fixtures/files/file.txt';
-		$form['FullForm[fileField]']->upload($filePath);
-		$file = $form['FullForm[fileField]']->getValue();
-		
+		$path = dirname(__FILE__).'/../fixtures/files/';
+		$filePath = $path.'file.txt';
+		$form['FullForm[fileField]']->upload($filePath);		
 		
 		$crawler = $client->submit($form);
 
@@ -48,6 +47,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue($crawler->filter('html:contains("Select first item")')->count() > 0);
 		$this->assertTrue($crawler->filter('html:contains("Password")')->count() > 0);
 		$this->assertTrue($crawler->filter('html:contains("TextArea")')->count() > 0);
+		$this->assertTrue($crawler->filter('html:contains("file.txt")')->count() > 0);
 	}
 
 	public function testReqValidator(){

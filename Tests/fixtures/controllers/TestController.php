@@ -43,8 +43,9 @@ class TestController extends CController
 		if (isset($_POST['LoginForm'])) {
 			$model->attributes = $_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
-			if ($model->validate() && $model->login())
+			if ($model->validate() && $model->login()) {
 				$this->redirect(Yii::app()->user->returnUrl);
+			}
 		}
 		// display the login form
 		$this->render('login', array('model' => $model));
@@ -74,23 +75,25 @@ class TestController extends CController
 		$GLOBALS['global_var'] = 123;
 	}
 
-
 	public function actionForm()
 	{
 		$model = new FullForm();
 
 		if ($_POST['FullForm']) {
 			$model->attributes = $_POST['FullForm'];
-//			var_dump($_POST['FullForm'], $model->attributes); die;
+			$model->attributes = $_FILES['FullForm'];
 		}
-		
-		if($_POST['FullForm'] && $model->validate()){
-			$this->render('formSubmit', array('model' => $model));
+
+		if ($_POST['FullForm'] && $model->validate()) {
+			$file = $model->fileField;
+			$uploadedFile = new CUploadedFile($file['name'], $file['tmp_name'], $file['type'], $file['size'], $file['error']);
+			$path = dirname(__FILE__).'/../fixtures/files/';
+			$upload_result = $uploadedFile->saveAs($path."tmp.txt");
+			$this->render('formSubmit', array('model' => $model, 'upload_result' => $upload_result));
 		} else {
 			$this->render('form', array('model' => $model));
 		}
 	}
-
 
 	public function actionFirst()
 	{
@@ -136,4 +139,5 @@ class TestController extends CController
 		Yii::app()->end();
 		echo "after<br>";
 	}
+
 }

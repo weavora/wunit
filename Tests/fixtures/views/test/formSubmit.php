@@ -18,4 +18,8 @@
 	<?php echo $model->textArea; ?>
 </div>
 
+<div class="row">
+	<?php echo $upload_result ? $model->fileField['name'] : ""; ?>
+</div>
+
 
