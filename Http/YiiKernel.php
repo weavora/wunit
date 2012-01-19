@@ -24,7 +24,7 @@ class YiiKernel implements HttpKernelInterface
 		} catch (Exception $e) {
 			$hasError = true;
 		}
-		
+
 		$content = ob_get_contents();
 		ob_end_clean();
 
@@ -46,7 +46,12 @@ class YiiKernel implements HttpKernelInterface
 		$headers = array();
 		foreach($rawHeaders as $rawHeader) {
 			list($name, $value) = explode(":", $rawHeader, 2);
-			$headers[strtolower(trim($name))] = trim($value);
+			$name = strtolower(trim($name));
+			$value = trim($value);
+			if (!isset($headers[$name]))
+				$headers[$name] = array();
+
+			$headers[$name][] = $value;
 		}
 		return $headers;
 	}
