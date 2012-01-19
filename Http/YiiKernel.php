@@ -12,7 +12,7 @@ class YiiKernel implements HttpKernelInterface
 	public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 	{
 		$request->overrideGlobals();
-		$app = $this->createYiiApp();
+		$app = \Yii::app();
 		$app->setComponent('request',new YiiRequest());
 		$app->request->inject();
 
@@ -21,23 +21,17 @@ class YiiKernel implements HttpKernelInterface
 		ob_start();
 		try {
 			$app->processRequest();
+		} catch (\YiiExitException $e) {
+
 		} catch (Exception $e) {
 			$hasError = true;
 		}
-		
+
 		$content = ob_get_contents();
 		ob_end_clean();
 
 		$headers = $this->getHeaders();
 		return new Response($content, $this->getStatusCode($headers, $hasError), $headers);
-	}
-
-	/**
-	 * @return \CWebApplication
-	 */
-	protected function createYiiApp()
-	{
-		return \Yii::app();
 	}
 
 	protected function getHeaders()
@@ -46,7 +40,12 @@ class YiiKernel implements HttpKernelInterface
 		$headers = array();
 		foreach($rawHeaders as $rawHeader) {
 			list($name, $value) = explode(":", $rawHeader, 2);
-			$headers[strtolower(trim($name))] = trim($value);
+			$name = strtolower(trim($name));
+			$value = trim($value);
+			if (!isset($headers[$name]))
+				$headers[$name] = array();
+
+			$headers[$name][] = $value;
 		}
 		return $headers;
 	}

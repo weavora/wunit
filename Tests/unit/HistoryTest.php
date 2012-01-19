@@ -16,27 +16,66 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
 		static::$wunit->init();
 	}
 
-	public function testOne()
+	public function testNavigation()
 	{
-		$this->markTestIncomplete();
 		$client = static::$wunit->createClient();
-		$crawler = $client->request('GET', '/test/index');
+		$client->request('GET', '/test/first');
+		$client->request('GET', '/test/second');
+		$this->assertRegExp('/second/is', $client->getResponse()->getContent());
 
 		$client->back();
-		$client->forward();
-		$client->reload();
+		$this->assertRegExp('/first/is', $client->getResponse()->getContent());
 
-		# Clears all cookies and the history
+		$client->forward();
+		$this->assertRegExp('/second/is', $client->getResponse()->getContent());
+
+		$client->reload();
+		$this->assertRegExp('/second/is', $client->getResponse()->getContent());
+	}
+
+	/**
+	 * @expectedException     LogicException
+	 */
+	public function testBack()
+	{
+		$client = static::$wunit->createClient();
+		$client->back();
+	}
+
+	/**
+	 * @expectedException     LogicException
+	 */
+	public function testRestart()
+	{
+		$client = static::$wunit->createClient();
+		$client->request('GET', '/test/first');
+		$client->request('GET', '/test/second');
 		$client->restart();
+		$client->back();
 	}
 
 	public function testCookies()
 	{
+		$client = static::$wunit->createClient();
+		$client->request('GET', '/test/setCookies');
+		$this->assertNotEmpty($client->getResponse()->headers->has('set-cookie'));
 
+		$client->request('GET', '/test/getCookies');
+		$this->assertRegExp('/global_cookies/is', $client->getResponse()->getContent());
+		$this->assertRegExp('/yii_cookies/is', $client->getResponse()->getContent());
+
+		$client->request('GET', '/test/index');
+		$client->request('GET', '/test/getCookies');
+		$this->assertRegExp('/global_cookies/is', $client->getResponse()->getContent());
+		$this->assertRegExp('/yii_cookies/is', $client->getResponse()->getContent());
 	}
 
 	public function testSession()
 	{
-
+		$client = static::$wunit->createClient();
+		$client->request('GET', '/test/setSession');
+		$client->request('GET', '/test/getSession');
+		$this->assertRegExp('/global_session/is', $client->getResponse()->getContent());
+		$this->assertRegExp('/yii_session/is', $client->getResponse()->getContent());
 	}
 }

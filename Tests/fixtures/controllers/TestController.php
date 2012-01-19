@@ -74,6 +74,7 @@ class TestController extends CController
 		$GLOBALS['global_var'] = 123;
 	}
 
+
 	public function actionForm()
 	{
 		$model = new FullForm();
@@ -90,4 +91,49 @@ class TestController extends CController
 		}
 	}
 
+
+	public function actionFirst()
+	{
+		$this->render('first');
+	}
+
+	public function actionSecond()
+	{
+		$this->render('second');
+	}
+
+	public function actionSetCookies()
+	{
+		setcookie("global_cookies", "yes");
+		Yii::app()->request->cookies['yii_cookies'] = new CHttpCookie('yii_cookies', "yes");
+	}
+
+	public function actionGetCookies()
+	{
+		if (isset($_COOKIE['global_cookies']))
+			echo "global_cookies=yes<br />";
+		if (isset(Yii::app()->request->cookies['yii_cookies']))
+			echo "yii_cookies=yes<br />";
+	}
+
+	public function actionSetSession()
+	{
+		$_SESSION['global_session'] = 'yes';
+		Yii::app()->session['yii_session'] = 'yes';
+	}
+
+	public function actionGetSession()
+	{
+		if (isset($_SESSION['global_session']))
+			echo "global_session=yes<br />";
+		if (isset(Yii::app()->session['yii_session']))
+			echo "yii_session=yes<br />";
+	}
+
+	public function actionYiiEnd()
+	{
+		echo "before<br>";
+		Yii::app()->end();
+		echo "after<br>";
+	}
 }

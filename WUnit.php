@@ -6,6 +6,8 @@ use WUnit\Http\YiiKernel;
 class WUnit extends CComponent
 {
 
+	private static $config = array();
+
 	public function init()
 	{
 		// @todo what with 'header already sent' error?
@@ -54,7 +56,17 @@ class WUnit extends CComponent
 	public function createClient()
 	{
 		$client  = new Client(new YiiKernel());
-		
 		return $client;
+	}
+
+	public static function createWebApplication($config = null)
+	{
+		if ($config !== null)
+			self::$config = $config;
+
+		$basePath = dirname(__FILE__);
+		require_once($basePath . '/Http/YiiApplication.php');
+		require_once($basePath . '/PHPUnit/ResultPrinter.php');
+		return new YiiApplication(self::$config);
 	}
 }

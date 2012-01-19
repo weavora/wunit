@@ -40,18 +40,18 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
 		Yii::app()->urlManager->urlFormat = CUrlManager::PATH_FORMAT;
 
-		$crawler = $client->request('GET', '/test/index');
+		$client->request('GET', '/test/index');
 		$this->assertNotEmpty($client->getResponse()->getContent());
 
-		$crawler = $client->request('GET', 'http://localhost/test/index');
+		$client->request('GET', 'http://localhost/test/index');
 		$this->assertNotEmpty($client->getResponse()->getContent());
 
 		Yii::app()->urlManager->urlFormat = CUrlManager::GET_FORMAT;
 
-		$crawler = $client->request('GET', '/index.php', array(Yii::app()->urlManager->routeVar => '/test/index'));
+		$client->request('GET', '/index.php', array(Yii::app()->urlManager->routeVar => '/test/index'));
 		$this->assertNotEmpty($client->getResponse()->getContent());
 
-		$crawler = $client->request('GET', 'http://localhost/index.php', array(Yii::app()->urlManager->routeVar => '/test/index'));
+		$client->request('GET', 'http://localhost/index.php', array(Yii::app()->urlManager->routeVar => '/test/index'));
 		$this->assertNotEmpty($client->getResponse()->getContent());
 
 		Yii::app()->urlManager->urlFormat = CUrlManager::PATH_FORMAT;
@@ -126,6 +126,15 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertTrue($crawler->filter('b:contains("HTTP_X_REQUESTED_WITH=XMLHttpRequest")')->count() > 0);
 		$this->assertTrue($crawler->filter('b:contains("HTTP_USER_AGENT=MySuperBrowser/1.0")')->count() > 0);
+	}
+
+	public function testYiiEnd()
+	{
+		$client = static::$wunit->createClient();
+		$client->request('GET', '/test/yiiEnd');
+		$this->assertRegExp('/before/is', $client->getResponse()->getContent());
+		$this->assertNotRegExp('/after/is', $client->getResponse()->getContent());
+
 	}
 
 
