@@ -134,8 +134,5 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		$client->request('GET', '/test/yiiEnd');
 		$this->assertRegExp('/before/is', $client->getResponse()->getContent());
 		$this->assertNotRegExp('/after/is', $client->getResponse()->getContent());
-
 	}
-
-
 }

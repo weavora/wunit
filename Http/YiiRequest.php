@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by JetBrains PhpStorm.
  * User: USER
@@ -9,7 +10,8 @@
 
 namespace WUnit\Http;
 
-class YiiRequest extends \CHttpRequest {
+class YiiRequest extends \CHttpRequest
+{
 
 	public function inject($files = array())
 	{
@@ -25,30 +27,29 @@ class YiiRequest extends \CHttpRequest {
 
 	protected function normalizeRequest()
 	{
-		if($this->enableCsrfValidation)
-			Yii::app()->attachEventHandler('onBeginRequest',array($this, 'validateCsrfToken'));
+		if ($this->enableCsrfValidation)
+			Yii::app()->attachEventHandler('onBeginRequest', array($this, 'validateCsrfToken'));
 	}
 
 	protected function filterFiles(array $files)
-    {
-        $filtered = array();
-        foreach ($files as $key => $value) {
-            if (is_array($value)) {
-                $filtered[$key] = $this->filterFiles($value);
-            } elseif(is_object($value)){
-                    $filtered[$key] = array(
-                        'tmp_name' => $value->getPathname(),
-                        'name' => $value->getClientOriginalName(),
-                        'type' => $value->getClientMimeType(),
-                        'size' => $value->getClientSize(),
-                        'error' => $value->getError(),
-                    );
-                
-            } 
-        }
+	{
+		$filtered = array();
+		foreach ($files as $key => $value) {
+			if (is_array($value)) {
+				$filtered[$key] = $this->filterFiles($value);
+			} elseif (is_object($value)) {
+				$filtered[$key] = array(
+					'tmp_name' => $value->getPathname(),
+					'name' => $value->getClientOriginalName(),
+					'type' => $value->getClientMimeType(),
+					'size' => $value->getClientSize(),
+					'error' => $value->getError(),
+				);
+			}
+		}
 
-        return $filtered;
-    }
+		return $filtered;
+	}
+
 }
-
 
