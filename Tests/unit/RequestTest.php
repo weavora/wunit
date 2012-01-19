@@ -128,5 +128,14 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue($crawler->filter('b:contains("HTTP_USER_AGENT=MySuperBrowser/1.0")')->count() > 0);
 	}
 
+	public function testYiiEnd()
+	{
+		$client = static::$wunit->createClient();
+		$client->request('GET', '/test/yiiEnd');
+		$this->assertRegExp('/before/is', $client->getResponse()->getContent());
+		$this->assertNotRegExp('/after/is', $client->getResponse()->getContent());
+
+	}
+
 
 }

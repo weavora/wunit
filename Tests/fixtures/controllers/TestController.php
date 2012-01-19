@@ -118,4 +118,11 @@ class TestController extends CController
 		if (isset(Yii::app()->session['yii_session']))
 			echo "yii_session=yes<br />";
 	}
+
+	public function actionYiiEnd()
+	{
+		echo "before<br>";
+		Yii::app()->end();
+		echo "after<br>";
+	}
 }
