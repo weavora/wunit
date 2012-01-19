@@ -16,21 +16,15 @@ class YiiRequest extends \CHttpRequest {
 		parent::init();
 	}
 
-	public function inject($getParams, $postParams, $serverParams)
+	public function inject()
 	{
-		$_GET = $getParams;
-		$_POST = $postParams;
-		$_SERVER = $serverParams;
-
 		if (empty($_SERVER['PHP_SELF'])) {
 			$_SERVER['PHP_SELF'] = '/index.php';
 		}
-		
+
 		if (empty($_SERVER['SCRIPT_FILENAME'])) {
 			$_SERVER['SCRIPT_FILENAME'] = \Yii::getPathOfAlias('application') . '/../index.php';
 		}
-
-		$_REQUEST = array_merge($_GET, $_POST);
 	}
 
 	protected function normalizeRequest()

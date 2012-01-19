@@ -67,25 +67,27 @@ class Client extends BaseClient
      */
     protected function getScript($request)
     {
-        $kernel = str_replace("'", "\\'", serialize($this->kernel));
-        $request = str_replace("'", "\\'", serialize($request));
+		$app =  str_replace("'", "\\'", serialize(\Yii::app()));
+		$request = str_replace("'", "\\'", serialize($request));
+		$basePath = dirname(__FILE_) . "/..";
+		$includePaths = get_include_path();
 
-        $r = new \ReflectionClass('\\Symfony\\Component\\ClassLoader\\UniversalClassLoader');
-        $requirePath = str_replace("'", "\\'", $r->getFileName());
 
-        $symfonyPath = str_replace("'", "\\'", realpath(__DIR__.'/../../..'));
-
-        return <<<EOF
+		return <<<EOF
 <?php
 
-require_once '$requirePath';
+set_include_path('$includePaths');
+require_once 'fixtures/bootstrap.php';
+require_once '$basePath/WUnit.php';
 
-\$loader = new WUnit\ClassLoader\UniversalClassLoader();
-\$loader->registerNamespaces(array('Symfony' => '$symfonyPath'));
-\$loader->register();
+\$wunit = new WUnit();
+\$wunit->init();
 
-\$kernel = unserialize('$kernel');
-echo serialize(\$kernel->handle(unserialize('$request')));
+\$request = unserialize('$request');
+
+\$kernel = new \WUnit\Http\YiiKernel();
+\$response = \$kernel->handle(\$request);
+echo serialize(\$response);
 EOF;
     }
 

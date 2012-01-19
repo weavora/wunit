@@ -29,4 +29,14 @@ class HistoryTest extends \PHPUnit_Framework_TestCase
 		# Clears all cookies and the history
 		$client->restart();
 	}
+
+	public function testCookies()
+	{
+
+	}
+
+	public function testSession()
+	{
+
+	}
 }

@@ -70,4 +70,14 @@ class TestController extends CController
 	{
 		$this->redirect(Yii::app()->createUrl('test/index'));
 	}
+
+	public function actionServer()
+	{
+		$this->render('server', array('server' => $_SERVER));
+	}
+
+	public function actionGlobal()
+	{
+		$GLOBALS['global_var'] = 123;
+	}
 }

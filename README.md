@@ -526,8 +526,8 @@ second argument of ``createClient()``::
 
 ```ruby
 $client = static::createClient(array(), array(
-    'HTTP_HOST'       => 'en.example.com',
-    'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
+    'HTTP_USER_AGENT'       => 'MySuperBrowser/1.0',
 ));
 ```
 
@@ -535,7 +535,7 @@ You can also override HTTP headers on a per request basis::
 
 ```ruby
 $client->request('GET', '/', array(), array(), array(
-    'HTTP_HOST'       => 'en.example.com',
-    'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
+    'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
+    'HTTP_USER_AGENT'       => 'MySuperBrowser/1.0',
 ));
 ```

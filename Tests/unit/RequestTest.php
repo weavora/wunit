@@ -82,26 +82,50 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testInsulate()
 	{
-		$this->markTestIncomplete();
-//		$client = static::$wunit->createClient();
-//		$client->insulate();
-//		$client->request('GET', '/test/index');
+		$client = static::$wunit->createClient();
+
+		$client->insulate();
+		$client->request('GET', '/test/index');
+		$this->assertRegExp('/Congratulations\!/is', $client->getResponse()->getContent());
+
+		$client->request('GET', '/test/global');
+		$this->assertEmpty($GLOBALS['global_var']);
+
+		$client->insulate(false);
+		$client->request('GET', '/test/global');
+		$this->assertNotEmpty($GLOBALS['global_var']);
 	}
 
-	public function textHeaders()
+	public function testServer()
 	{
-		$this->markTestIncomplete();
 		$client = static::$wunit->createClient();
-		$client->request('GET', '/test/index', array(), array(), array(
-			'HTTP_HOST'       => 'en.example.com',
+
+		$crawler = $client->request('GET', '/test/server');
+		$this->assertFalse($crawler->filter('b:contains("HTTP_X_REQUESTED_WITH=XMLHttpRequest")')->count() > 0);
+		$this->assertFalse($crawler->filter('b:contains("HTTP_USER_AGENT=MySuperBrowser/1.0")')->count() > 0);
+
+		$crawler = $client->request('GET', '/test/server', array(), array(), array(
+			'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
 			'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
 		));
 
+		$this->assertTrue($crawler->filter('b:contains("HTTP_X_REQUESTED_WITH=XMLHttpRequest")')->count() > 0);
+		$this->assertTrue($crawler->filter('b:contains("HTTP_USER_AGENT=MySuperBrowser/1.0")')->count() > 0);
+
 		$client = static::$wunit->createClient(array(), array(
-			'HTTP_HOST'       => 'en.example.com',
+			'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
 			'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
 		));
-		$client->request('GET', '/test/index');
+
+		$client->request('GET', '/test/server');
+
+		$this->assertTrue($crawler->filter('b:contains("HTTP_X_REQUESTED_WITH=XMLHttpRequest")')->count() > 0);
+		$this->assertTrue($crawler->filter('b:contains("HTTP_USER_AGENT=MySuperBrowser/1.0")')->count() > 0);
+
+		$client->request('GET', '/test/server');
+
+		$this->assertTrue($crawler->filter('b:contains("HTTP_X_REQUESTED_WITH=XMLHttpRequest")')->count() > 0);
+		$this->assertTrue($crawler->filter('b:contains("HTTP_USER_AGENT=MySuperBrowser/1.0")')->count() > 0);
 	}
 
 

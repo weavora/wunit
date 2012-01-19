@@ -19,12 +19,41 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
 	public function testRedirect()
 	{
 		$client = static::$wunit->createClient();
-		$crawler = $client->request('GET', '/test/redirect');
+		$client->request('GET', '/test/redirect');
 
-		# or simply check that the response is a redirect to any URL
+		// or simply check that the response is a redirect to any URL
 		$this->assertTrue($client->getResponse()->isRedirect());
 
-		# Assert that the response is a redirect to /site/contact
+		// Assert that the response is a redirect to /site/contact
 		$this->assertTrue($client->getResponse()->isRedirect(Yii::app()->createAbsoluteUrl('/test/index')));
+
+		$client->request('GET', '/test/index');
+		$this->assertFalse($client->getResponse()->isRedirect());
+
+		$client->request('GET', '/test/redirect');
+		$this->assertTrue($client->getResponse()->isRedirect());
+
+		$client->request('GET', '/test/index');
+		$this->assertFalse($client->getResponse()->isRedirect());
+	}
+
+	public function testFollow()
+	{
+		$client = static::$wunit->createClient();
+
+		$client->request('GET', '/test/index');
+		$this->assertRegExp('/Congratulations\!/is', $client->getResponse()->getContent());
+
+		$client->followRedirects(false);
+		$client->request('GET', '/test/redirect');
+		$this->assertTrue($client->getResponse()->isRedirect());
+		$this->assertEmpty($client->getResponse()->getContent());
+
+		$client->followRedirect();
+		$this->assertNotEmpty($client->getResponse()->getContent());
+
+		$client->followRedirects(true);
+		$client->request('GET', '/test/redirect');
+		$this->assertNotEmpty($client->getResponse()->getContent());
 	}
 }

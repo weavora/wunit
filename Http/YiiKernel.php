@@ -11,9 +11,10 @@ class YiiKernel implements HttpKernelInterface
 	
 	public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
 	{
+		$request->overrideGlobals();
 		$app = $this->createYiiApp();
 		$app->setComponent('request',new YiiRequest());
-		$app->request->inject($request->query->all(), $request->request->all(), $request->server->all());
+		$app->request->inject();
 
 		$hasError = false;
 
@@ -37,8 +38,6 @@ class YiiKernel implements HttpKernelInterface
 	protected function createYiiApp()
 	{
 		return \Yii::app();
-//		$config = require(\Yii::getPathOfAlias('application.config').'/test.php');
-//		return \Yii::createWebApplication($config);
 	}
 
 	protected function getHeaders()

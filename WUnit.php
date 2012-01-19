@@ -2,7 +2,6 @@
 
 use WUnit\HttpKernel\Client;
 use WUnit\Http\YiiKernel;
-use WUnit\HttpFoundation\Request;
 
 class WUnit extends CComponent
 {
