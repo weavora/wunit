@@ -28,5 +28,3 @@ class YiiRequest extends \CHttpRequest {
 			Yii::app()->attachEventHandler('onBeginRequest',array($this, 'validateCsrfToken'));
 	}
 }
-
-

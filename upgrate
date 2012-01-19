@@ -1,0 +1,7 @@
+git submodule add https://github.com/symfony/BrowserKit.git BrowserKit
+git submodule add https://github.com/symfony/CssSelector.git CssSelector
+git submodule add https://github.com/symfony/DomCrawler.git DomCrawler
+git submodule add https://github.com/symfony/HttpFoundation.git HttpFoundation
+git submodule add https://github.com/symfony/Process.git Process
+
+git submodule update --init
