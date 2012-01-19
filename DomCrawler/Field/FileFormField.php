@@ -57,7 +57,7 @@ class FileFormField extends FormField
     public function setValue($value)
     {
         if (null !== $value && is_readable($value)) {
-            $error = UPLOAD_ERR_OK;
+			$error = UPLOAD_ERR_OK;
             $size = filesize($value);
             $name = basename($value);
 
@@ -72,7 +72,7 @@ class FileFormField extends FormField
             $name = '';
             $value = '';
         }
-
+		
         $this->value = array('name' => $name, 'type' => '', 'tmp_name' => $value, 'error' => $error, 'size' => $size);
     }
 
