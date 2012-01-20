@@ -1,24 +1,75 @@
 WUnit
 =======
 
+Functional testing without Selenium
+-----------------------------------
 
-Functional Tests
-----------------
+Do you want to create functional tests in [symfony2 style](http://symfony.com/doc/2.0/book/testing.html) without Selenium?
+What could be easier! Just install ``wunit`` extension.
 
-Functional tests check the integration of the different layers of an
-application (from the routing to the views). They are no different from unit
-tests as far as PHPUnit is concerned, but they have a very specific workflow:
+Note that ``wunit`` based on some ``symfony2`` classes and support all ``symfony2`` testing features
+(of course, except directly related to ``symfony2`` core like profiling)
 
-* Make a request;
-* Test the response;
-* Click on a link or submit a form;
-* Test the response;
-* Rinse and repeat.
+Requirements
+-----------
+
+* PHP 5.3.x or higher
+* PHPUnit 3.6.x or higher
+* XDebug extension installed
+
+Installation
+------------
+
+1) Download and unpack source into protected/extensions/wunit folder.
+2) Import wunit into test config (protected/config/test.php):
+
+```ruby
+// test.php
+return array(
+    ...
+    'import' => array(
+        ...
+        'ext.wunit.*',
+    ),
+    ...
+);
+```
+
+3) Update protected/tests/bootstrap.php
+
+Replace line
+```ruby
+Yii::createWebApplication($config);
+```
+with
+
+```
+require(dirname(__FILE__) . '/../extensions/wunit/WUnit.php');
+WUnit::createWebApplication($config);
+```
+
+4) Replace protected/tests/phpunit.xml with:
+
+```xml
+<phpunit
+bootstrap="bootstrap.php"
+convertErrorsToExceptions="true"
+convertNoticesToExceptions="true"
+convertWarningsToExceptions="true"
+printerClass="WUnit_ResultPrinter"
+stopOnFailure="false"
+/>
+```
+
+NOTICE that ``printerClass="WUnit_ResultPrinter"`` is very important.
+
+That's it. Now you could use create proper functional test without Selenium :)
+
 
 Your First Functional Test
 --------------------------
 
-Functional tests are simple PHP files that typically live in the ``tests/functional/controllers``
+Functional tests are simple PHP files that typically live in the ``protected/tests/functional/``
 If you want to test the pages handled by your ``SiteController`` class, start by creating
 a new ``SiteControllerTest.php`` file that extends a special ``WUnitTestCase`` class.
 
@@ -97,7 +148,7 @@ $this->assertRegExp('/Hello Chris/', $client->getResponse()->getContent());
 
 # More about request() method
 
-The full signature of the ``request()`` method is::
+The full signature of the ``request()`` method is:
 
     request(
         $method,
@@ -111,7 +162,7 @@ The full signature of the ``request()`` method is::
 
 The ``server`` array is the raw values that you'd expect to normally
 find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`
-and `Referer` HTTP headers, you'd pass the following::
+and `Referer` HTTP headers, you'd pass the following:
 
 ```ruby
 $client->request(
@@ -130,7 +181,7 @@ $client->request(
 ### Useful Assertions
 
 To get you started faster, here is a list of the most common and
-useful test assertions::
+useful test assertions:
 
 ```ruby
 # Assert that there is exactly one h2 tag with the class "subtitle"
@@ -174,7 +225,7 @@ The ``request()`` method takes the HTTP method and a URL as arguments and
 returns a ``Crawler`` instance.
 
 Use the Crawler to find DOM elements in the Response. These elements can then
-be used to click on links and submit forms::
+be used to click on links and submit forms:
 
 ```ruby
 $link = $crawler->selectLink('Go elsewhere...')->link();
@@ -191,7 +242,7 @@ giving you a nice API for uploading files.
 
 
 The ``request`` method can also be used to simulate form submissions directly
-or perform more complex requests::
+or perform more complex requests:
 
 ```ruby
 # Directly submit a form (but using the Crawler is easier!)
@@ -233,7 +284,7 @@ $client->request(
 
 Last but not least, you can force each request to be executed in its own PHP
 process to avoid any side-effects when working with several clients in the same
-script::
+script:
 
 ```ruby
 $client->insulate();
@@ -241,7 +292,7 @@ $client->insulate();
 
 ### Browsing
 
-The Client supports many operations that can be done in a real browser::
+The Client supports many operations that can be done in a real browser:
 
 ```ruby
 $client->back();
@@ -255,14 +306,14 @@ $client->restart();
 ### Accessing Internal Objects
 
 If you use the client to test your application, you might want to access the
-client's internal objects::
+client's internal objects:
 
 ```ruby
 $history   = $client->getHistory();
 $cookieJar = $client->getCookieJar();
 ```
 
-You can also get the objects related to the latest request::
+You can also get the objects related to the latest request:
 
 ```ruby
 $request  = $client->getRequest();
@@ -276,14 +327,14 @@ $crawler  = $client->getCrawler();
 
 When a request returns a redirect response, the client automatically follows
 it. If you want to examine the Response before redirecting, you can force
-the client to not follow redirects with the  ``followRedirects()`` method::
+the client to not follow redirects with the  ``followRedirects()`` method:
 
 ```ruby
 $client->followRedirects(false);
 ```
 
 When the client does not follow redirects, you can force the redirection with
-the ``followRedirect()`` method::
+the ``followRedirect()`` method:
 
 ```ruby
 $crawler = $client->followRedirect();
@@ -299,7 +350,7 @@ It allows you to traverse HTML documents, select nodes, find links and forms.
 
 Like jQuery, the Crawler has methods to traverse the DOM of an HTML/XML
 document. For example, the following finds all ``input[type=submit]`` elements,
-selects the last one on the page, and then selects its immediate parent element::
+selects the last one on the page, and then selects its immediate parent element:
 
 ```ruby
 $newCrawler = $crawler->filter('input[type=submit]')
@@ -363,7 +414,7 @@ Many other methods are also available:
 </table>
 
 Since each of these methods returns a new ``Crawler`` instance, you can
-narrow down your node selection by chaining the method calls::
+narrow down your node selection by chaining the method calls:
 
 ```ruby
 $crawler
@@ -383,7 +434,7 @@ Use the ``count()`` function to get the number of nodes stored in a Crawler:
 
 ### Extracting Information
 
-The Crawler can extract information from the nodes::
+The Crawler can extract information from the nodes:
 
 ```ruby
 # Returns the attribute value for the first node
@@ -406,7 +457,7 @@ $data = $crawler->each(function ($node, $i)
 ### Links
 
 To select links, you can use the traversing methods above or the convenient
-``selectLink()`` shortcut::
+``selectLink()`` shortcut:
 
 ```ruby
 $crawler->selectLink('Click here');
@@ -419,7 +470,7 @@ methods, this returns another ``Crawler`` object.
 Once you've selected a link, you have access to a special ``Link`` object,
 which has helpful methods specific to links (such as ``getMethod()`` and
 ``getUri()``). To click on the link, use the Client's ``click()`` method
-and pass it a ``Link`` object::
+and pass it a ``Link`` object:
 
 ```ruby
 $link = $crawler->selectLink('Click here')->link();
@@ -429,7 +480,7 @@ $client->click($link);
 
 ### Forms
 
-Just like links, you select forms with the ``selectButton()`` method::
+Just like links, you select forms with the ``selectButton()`` method:
 
 ```ruby
 $buttonCrawlerNode = $crawler->selectButton('submit');
@@ -449,14 +500,14 @@ tags. It uses several different parts of the buttons to find them:
 * The ``id`` or ``name`` attribute value for ``button`` tags.
 
 Once you have a Crawler representing a button, call the ``form()`` method
-to get a ``Form`` instance for the form wrapping the button node::
+to get a ``Form`` instance for the form wrapping the button node:
 
 ```ruby
 $form = $buttonCrawlerNode->form();
 ```
 
 When calling the ``form()`` method, you can also pass an array of field values
-that overrides the default ones::
+that overrides the default ones:
 
 ```ruby
 $form = $buttonCrawlerNode->form(array(
@@ -466,20 +517,20 @@ $form = $buttonCrawlerNode->form(array(
 ```
 
 And if you want to simulate a specific HTTP method for the form, pass it as a
-second argument::
+second argument:
 
 ```ruby
 $form = $crawler->form(array(), 'DELETE');
 ```
 
-The Client can submit ``Form`` instances::
+The Client can submit ``Form`` instances:
 
 ```ruby
 $client->submit($form);
 ```
 
 The field values can also be passed as a second argument of the ``submit()``
-method::
+method:
 
 ```ruby
 $client->submit($form, array(
@@ -489,7 +540,7 @@ $client->submit($form, array(
 ```
 
 For more complex situations, use the ``Form`` instance as an array to set the
-value of each field individually::
+value of each field individually:
 
 ```ruby
 # Change the value of a field
@@ -498,7 +549,7 @@ $form['my_form[subject]'] = 'Weavora rocks!';
 ```
 
 There is also a nice API to manipulate the values of the fields according to
-their type::
+their type:
 
 ```ruby
 # Select an option or a radio
@@ -522,7 +573,7 @@ HTTP headers
 ---------------------
 
 If your application behaves according to some HTTP headers, pass them as the
-second argument of ``createClient()``::
+second argument of ``createClient()``:
 
 ```ruby
 $client = static::createClient(array(), array(
@@ -531,7 +582,7 @@ $client = static::createClient(array(), array(
 ));
 ```
 
-You can also override HTTP headers on a per request basis::
+You can also override HTTP headers on a per request basis:
 
 ```ruby
 $client->request('GET', '/', array(), array(), array(
