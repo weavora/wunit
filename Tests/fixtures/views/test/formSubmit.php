@@ -1,13 +1,13 @@
 <div class="row">
-	<?php echo $model->textField; ?>
+	<?php echo $form->textField; ?>
 </div>
 
 <div class="row">
-	<?php echo $model->checkBox ?  "CheckBox is checked": "Not check"; ?>
+	<?php echo $form->checkBox ?  "CheckBox is checked": "Not check"; ?>
 </div>
 
 <div class="row">
-	<?php echo $model->dropDownList; ?>
+	<?php echo $form->dropDownList; ?>
 </div>
 
 <div class="row">
@@ -15,11 +15,11 @@
 </div>
 
 <div class="row">
-	<?php echo $model->textArea; ?>
+	<?php echo $form->textArea; ?>
 </div>
 
 <div class="row">
-	<?php echo $upload_result ? $model->fileField['name'] : ""; ?>
+	<?php echo $uploadedFileSaved ? $form->fileField['name'] : ""; ?>
 </div>
 
 

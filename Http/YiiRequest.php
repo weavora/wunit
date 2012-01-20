@@ -15,7 +15,12 @@ class YiiRequest extends \CHttpRequest
 
 	public function inject($files = array())
 	{
+
 		$_FILES = $this->filterFiles($files);
+		if (!empty($files)) {
+			var_dump($files, $_FILES);
+			die();
+		}
 		if (empty($_SERVER['PHP_SELF'])) {
 			$_SERVER['PHP_SELF'] = '/index.php';
 		}
@@ -31,14 +36,16 @@ class YiiRequest extends \CHttpRequest
 			Yii::app()->attachEventHandler('onBeginRequest', array($this, 'validateCsrfToken'));
 	}
 
-	protected function filterFiles(array $files)
+	protected function filterFiles($files, $parentKey = "")
 	{
 		$filtered = array();
 		foreach ($files as $key => $value) {
+//			$filteredKey = empty($parentKey) ? $key : $parentKey . "[" . $key . "]";
+			$filteredKey = $key;
 			if (is_array($value)) {
-				$filtered[$key] = $this->filterFiles($value);
+				$filtered[$filteredKey] = $this->filterFiles($value, $filteredKey);
 			} elseif (is_object($value)) {
-				$filtered[$key] = array(
+				$filtered[$filteredKey] = array(
 					'tmp_name' => $value->getPathname(),
 					'name' => $value->getClientOriginalName(),
 					'type' => $value->getClientMimeType(),

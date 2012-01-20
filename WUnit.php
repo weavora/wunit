@@ -66,6 +66,7 @@ class WUnit extends CComponent
 
 		$basePath = dirname(__FILE__);
 		require_once($basePath . '/Http/YiiApplication.php');
+		require_once($basePath . '/UploadedFile.php');
 		require_once($basePath . '/PHPUnit/ResultPrinter.php');
 		return new YiiApplication(self::$config);
 	}

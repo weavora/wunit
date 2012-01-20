@@ -77,22 +77,24 @@ class TestController extends CController
 
 	public function actionForm()
 	{
-		$model = new FullForm();
+		$form = new FullForm();
 
-		if ($_POST['FullForm']) {
-			$model->attributes = $_POST['FullForm'];
-			$model->attributes = $_FILES['FullForm'];
+		if (Yii::app()->request->getParam('FullForm')) {
+			$form->attributes = Yii::app()->request->getParam('FullForm');
+			$form->fileField = UploadedFile::getInstanceByName("FullForm[fileField]");
+
+			if ($form->validate()) {
+				$uploaded = $form->fileField->saveAs(dirname(__FILE__).'/files/tmp.txt');
+				$this->render('formSubmit', array(
+					'form' => $form,
+					'uploadedFileSaved' => $uploaded
+				));
+			}
 		}
 
-		if ($_POST['FullForm'] && $model->validate()) {
-			$file = $model->fileField;
-			$uploadedFile = new CUploadedFile($file['name'], $file['tmp_name'], $file['type'], $file['size'], $file['error']);
-			$path = dirname(__FILE__).'/../fixtures/files/';
-			$upload_result = $uploadedFile->saveAs($path."tmp.txt");
-			$this->render('formSubmit', array('model' => $model, 'upload_result' => $upload_result));
-		} else {
-			$this->render('form', array('model' => $model));
-		}
+		$this->render('form', array(
+			'model' => $form
+		));
 	}
 
 	public function actionFirst()
