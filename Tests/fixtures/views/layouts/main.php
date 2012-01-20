@@ -23,6 +23,9 @@
 
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<div id="user-info">
+			<?php echo Yii::app()->user->isGuest ? "You are not loged in" : "You are loged in as ".Yii::app()->user->getName();?>
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">

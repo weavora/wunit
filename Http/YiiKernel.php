@@ -31,6 +31,15 @@ class YiiKernel implements HttpKernelInterface
 		ob_end_clean();
 
 		$headers = $this->getHeaders();
+		
+		$sessionId = session_id();
+		if(empty($sessionId)){
+			session_regenerate_id();
+			$app->session->open();
+			
+		}
+
+		
 		return new Response($content, $this->getStatusCode($headers, $hasError), $headers);
 	}
 

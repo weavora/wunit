@@ -36,6 +36,9 @@ return array(
 			),
 		),
 
+		'assetManager' => array(
+			'basePath' => dirname(__FILE__).DIRECTORY_SEPARATOR.'../assets',
+		),
 		//'db'=>array(
 		//	'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		//),

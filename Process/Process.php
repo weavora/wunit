@@ -116,7 +116,8 @@ class Process
             stream_set_blocking($pipe, false);
         }
 
-        if (null === $this->stdin) {
+        $pipeMeta = stream_get_meta_data($pipes[0]);
+        if (null === $this->stdin || $pipeMeta['blocked']) {
             fclose($pipes[0]);
             $writePipes = null;
         } else {
