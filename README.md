@@ -21,7 +21,8 @@ Installation
 ------------
 
 1) Download and unpack source into protected/extensions/wunit folder.
-2) Import wunit into test config (protected/config/test.php):
+
+2) Import wunit into test config (protected/config/**test.php**):
 
 ```ruby
 # protected/config/test.php
@@ -31,6 +32,12 @@ return array(
         ...
         'ext.wunit.*',
     ),
+	...
+	'components' => array(
+		...
+		'wunit' => array(
+			'class' => 'WUnit'
+		),
     ...
 );
 ```
@@ -38,7 +45,7 @@ return array(
 3) Update protected/tests/bootstrap.php
 
 Replace line
-```ruby
+```
 Yii::createWebApplication($config);
 ```
 with
@@ -61,7 +68,7 @@ stopOnFailure="false"
 />
 ```
 
-NOTICE that ``printerClass="WUnit_ResultPrinter"`` is very important.
+**NOTICE** that ``printerClass="WUnit_ResultPrinter"`` is very important.
 
 5*) To test file uploading you should use UploadedFile class instead of CUploadedFile. Here is example:
 
@@ -131,7 +138,7 @@ the following code finds all links with the text ``Greet``, then selects
 the second one, and ultimately clicks on it:
 
 ```ruby
-$link = $crawler->filter('a:contains("Greet")')->eq(1)->link();
+$link = $crawler->filter('a:contains("Greet")')->eq(0)->link();
 
 $crawler = $client->click($link);
 ```
@@ -169,6 +176,21 @@ document:
 
 ```ruby
 $this->assertRegExp('/Hello Chris/', $client->getResponse()->getContent());
+```
+# Run Tests
+From protected/tests:
+
+```ruby
+phpunit unit //run all tests from unit folder
+phpunit functional //run all tests from functional folder
+pupunit functiona/SiteControllerTest.php // run specific test
+```
+
+**NOTICE** WUnit not require selenium and you can don't install it, in this case you should comment out the following line in file protected/tests/bootstrap.php
+
+```ruby
+#protected/tests/bootstrap.php
+require_once(dirname(__FILE__).'/WebTestCase.php');
 ```
 
 # More about request() method
