@@ -24,7 +24,7 @@ Installation
 2) Import wunit into test config (protected/config/test.php):
 
 ```ruby
-// test.php
+# protected/config/test.php
 return array(
     ...
     'import' => array(
@@ -62,6 +62,31 @@ stopOnFailure="false"
 ```
 
 NOTICE that ``printerClass="WUnit_ResultPrinter"`` is very important.
+
+5*) To test file uploading you should use UploadedFile class instead of CUploadedFile. Here is example:
+
+```ruby
+# protected/config/main.php
+return array(
+	...
+    'import' => array(
+    	...
+        'ext.wunit.*',
+    ),
+);
+
+# protected/controllers/TestController.php
+public function actionFormWithFile() {
+	$form = new SomeForm();
+	if (Yii::app()->request->getParam('FullForm')) {
+		$form->attributes = Yii::app()->request->getParam('FullForm');
+		$form->fileField = UploadedFile::getInstanceByName("FullForm[fileField]");
+		if ($form->validate()) {
+			$form->fileField->saveAs(dirname(__FILE__).'/../files/tmp.txt');
+		}
+	}
+}
+```
 
 That's it. Now you could use create proper functional test without Selenium :)
 

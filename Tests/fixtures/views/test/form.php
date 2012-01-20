@@ -7,7 +7,8 @@ $this->pageTitle = Yii::app()->name . ' - Test Form functionality';
 <?php
 $form = $this->beginWidget('CActiveForm', array(
 	'id' => 'contact-form',
-		));
+	'htmlOptions' => array('enctype'=>'multipart/form-data')
+	));
 ?>
 
 <div class="row">

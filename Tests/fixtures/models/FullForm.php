@@ -12,7 +12,8 @@ class FullForm extends CFormModel{
 	public function rules(){
 		return array(
 			array('textField', 'required', 'message' => 'textField are not empty'),
-			array('checkBox, dropDownList, passwordField, textArea, radioButton, fileField', 'safe'),
+			array('fileField', 'file'),
+			array('checkBox, dropDownList, passwordField, textArea, radioButton', 'safe'),
 		);
 	}
 }

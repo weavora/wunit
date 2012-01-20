@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-	<?php echo $model->passwordField; ?>
+	<?php echo $form->passwordField; ?>
 </div>
 
 <div class="row">
@@ -19,7 +19,7 @@
 </div>
 
 <div class="row">
-	<?php echo $uploadedFileSaved ? $form->fileField['name'] : ""; ?>
+	<?php echo $uploadedFileSaved ? $form->fileField->getName() : ""; ?>
 </div>
 
 

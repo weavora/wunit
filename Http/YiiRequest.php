@@ -17,10 +17,6 @@ class YiiRequest extends \CHttpRequest
 	{
 
 		$_FILES = $this->filterFiles($files);
-		if (!empty($files)) {
-			var_dump($files, $_FILES);
-			die();
-		}
 		if (empty($_SERVER['PHP_SELF'])) {
 			$_SERVER['PHP_SELF'] = '/index.php';
 		}
@@ -36,22 +32,26 @@ class YiiRequest extends \CHttpRequest
 			Yii::app()->attachEventHandler('onBeginRequest', array($this, 'validateCsrfToken'));
 	}
 
-	protected function filterFiles($files, $parentKey = "")
+	protected function filterFiles($files)
 	{
 		$filtered = array();
 		foreach ($files as $key => $value) {
-//			$filteredKey = empty($parentKey) ? $key : $parentKey . "[" . $key . "]";
-			$filteredKey = $key;
 			if (is_array($value)) {
-				$filtered[$filteredKey] = $this->filterFiles($value, $filteredKey);
+				$filtered[$key] = $this->filterFiles($value);
 			} elseif (is_object($value)) {
-				$filtered[$filteredKey] = array(
-					'tmp_name' => $value->getPathname(),
-					'name' => $value->getClientOriginalName(),
-					'type' => $value->getClientMimeType(),
-					'size' => $value->getClientSize(),
-					'error' => $value->getError(),
-				);
+				// Yii style :)
+				$filtered['tmp_name'][$key] = $value->getPathname();
+				$filtered['name'][$key] = $value->getClientOriginalName();
+				$filtered['type'][$key] = $value->getClientMimeType();
+				$filtered['size'][$key] = $value->getClientSize();
+				$filtered['error'][$key] = $value->getError();
+//				$filtered[$key] = array(
+//					'tmp_name' => $value->getPathname(),
+//					'name' => $value->getClientOriginalName(),
+//					'type' => $value->getClientMimeType(),
+//					'size' => $value->getClientSize(),
+//					'error' => $value->getError(),
+//				);
 			}
 		}
 

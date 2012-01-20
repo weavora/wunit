@@ -84,11 +84,12 @@ class TestController extends CController
 			$form->fileField = UploadedFile::getInstanceByName("FullForm[fileField]");
 
 			if ($form->validate()) {
-				$uploaded = $form->fileField->saveAs(dirname(__FILE__).'/files/tmp.txt');
+				$uploaded = $form->fileField->saveAs(dirname(__FILE__).'/../files/tmp.txt');
 				$this->render('formSubmit', array(
 					'form' => $form,
 					'uploadedFileSaved' => $uploaded
 				));
+				Yii::app()->end();
 			}
 		}
 
