@@ -4,11 +4,11 @@ WUnit
 Functional testing without Selenium
 -----------------------------------
 
-Do you want to create functional tests in [symfony2 style](http://symfony.com/doc/2.0/book/testing.html) without Selenium?
+Would you like to create functional tests in [symfony2 style](http://symfony.com/doc/2.0/book/testing.html) without Selenium?
 What could be easier! Just install ``wunit`` extension.
 
 Note that ``wunit`` based on some ``symfony2`` classes and support all ``symfony2`` testing features
-(of course, except directly related to ``symfony2`` core like profiling)
+(of course, except for directly related to ``symfony2`` core like profiling)
 
 Requirements
 -----------
@@ -95,14 +95,14 @@ public function actionFormWithFile() {
 }
 ```
 
-That's it. Now you could use create proper functional test without Selenium :)
+That's it. Now you can use create proper functional tests without Selenium :)
 
 
 Your First Functional Test
 --------------------------
 
-Functional tests are simple PHP files that typically live in the ``protected/tests/functional/``
-If you want to test the pages handled by your ``SiteController`` class, start by creating
+Functional tests are simple PHP files that typically live in the ``protected/tests/functional/`` folder.
+If you would like to test the pages handled by your ``SiteController`` class, start by creating
 a new ``SiteControllerTest.php`` file that extends a special ``WUnitTestCase`` class.
 
 ```ruby
@@ -119,15 +119,13 @@ class SiteControllerTest extends WUnitTestCase
 }
 ```
 
-The ``createClient()`` method returns a client, which is like a browser that
-you'll use to crawl your site:
+The ``createClient()`` method returns a client, which is like a browser that you'll use to crawl your site:
 
 ```ruby
 $crawler = $client->request('GET', '/site/index');
 ```
 
-The ``request()`` method returns a ``Crawler`` object which can
-be used to select elements in the Response, click on links, and submit forms.
+The ``request()`` method returns a ``Crawler`` object which can be used to select elements in the Response, click on links, and submit forms.
 
 The Crawler only works when the response is an XML or an HTML document.
 To get the raw content response, call $client->getResponse()->getContent().
@@ -143,7 +141,7 @@ $link = $crawler->filter('a:contains("Greet")')->eq(0)->link();
 $crawler = $client->click($link);
 ```
 
-Submitting a form is very similar; select a form button, optionally override
+Submitting a form is quite similar; select a form button, optionally override
 some form values, and submit the corresponding form:
 
 ```ruby
@@ -161,8 +159,8 @@ The form can also handle uploads and contains methods to fill in different types
 of form fields (e.g. select() and tick()). For details, see the
 `Forms` section below.
 
-Now that you can easily navigate through an application, use assertions to test
-that it actually does what you expect it to. Use the ``Crawler`` to make assertions
+Now when you can easily navigate through an application, use assertions to test
+that it actually does what you expect it to do. Use the ``Crawler`` to make assertions
 on the DOM:
 
 ```ruby
@@ -186,7 +184,7 @@ phpunit functional //run all tests from functional folder
 phpunit functional/SiteControllerTest.php // run specific test
 ```
 
-**NOTICE** WUnit not require selenium, and if you have no it installed
+**NOTICE** WUnit do not require selenium, and if it is not installed on your environment
 then just comment out the following line in file protected/tests/bootstrap.php
 
 ```ruby
@@ -261,7 +259,7 @@ Working with the Test Client
 -----------------------------
 
 The test Client simulates an HTTP client like a browser and makes requests
-into your Yii application:
+to your Yii application:
 
 ```ruby
 $crawler = $client->request('GET', '/site/index');
@@ -375,7 +373,7 @@ $crawler  = $client->getCrawler();
 
 When a request returns a redirect response, the client automatically follows
 it. If you want to examine the Response before redirecting, you can force
-the client to not follow redirects with the  ``followRedirects()`` method:
+the client to skip following redirects with the  ``followRedirects()`` method:
 
 ```ruby
 $client->followRedirects(false);
