@@ -132,11 +132,11 @@ To get the raw content response, call $client->getResponse()->getContent().
 
 Click on a link by first selecting it with the Crawler using either an XPath
 expression or a CSS selector, then use the Client to click on it. For example,
-the following code finds all links with the text ``Greet``, then selects
+the following code finds all links with the text ``Great``, then selects
 the second one, and ultimately clicks on it:
 
 ```ruby
-$link = $crawler->filter('a:contains("Greet")')->eq(0)->link();
+$link = $crawler->filter('a:contains("Great")')->eq(0)->link();
 
 $crawler = $client->click($link);
 ```
