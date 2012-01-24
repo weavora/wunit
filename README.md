@@ -186,7 +186,8 @@ phpunit functional //run all tests from functional folder
 phpunit functional/SiteControllerTest.php // run specific test
 ```
 
-**NOTICE** WUnit not require selenium and you can don't install it, in this case you should comment out the following line in file protected/tests/bootstrap.php
+**NOTICE** WUnit not require selenium, and if you have no it installed
+then just comment out the following line in file protected/tests/bootstrap.php
 
 ```ruby
 #protected/tests/bootstrap.php
