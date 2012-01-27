@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author Weavora Team <hello@weavora.com>
+ * @link http://weavora.com
+ * @copyright Copyright (c) 2011 Weavora LLC
+ */
 
 namespace WUnit\Http;
 
@@ -21,7 +26,7 @@ class YiiKernel implements HttpKernelInterface
 		ob_start();
 		try {
 			$app->processRequest();
-		} catch (\YiiExitException $e) {
+		} catch (YiiExitException $e) {
 
 		} catch (Exception $e) {
 			$hasError = true;

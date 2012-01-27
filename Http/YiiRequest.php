@@ -1,11 +1,8 @@
 <?php
-
 /**
- * Created by JetBrains PhpStorm.
- * User: USER
- * Date: 9/13/11
- * Time: 1:32 PM
- * To change this template use File | Settings | File Templates.
+ * @author Weavora Team <hello@weavora.com>
+ * @link http://weavora.com
+ * @copyright Copyright (c) 2011 Weavora LLC
  */
 
 namespace WUnit\Http;
