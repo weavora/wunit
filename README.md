@@ -55,6 +55,18 @@ require(dirname(__FILE__) . '/../extensions/wunit/WUnit.php');
 WUnit::createWebApplication($config);
 ```
 
+You should get something like:
+
+```ruby
+$yiit=dirname(__FILE__).'/../../../framework/yiit.php';
+$config=dirname(__FILE__).'/../config/test.php';
+
+require_once($yiit);
+
+require(dirname(__FILE__) . '/../extensions/wunit/WUnit.php');
+WUnit::createWebApplication($config);
+```
+
 4) Replace protected/tests/phpunit.xml with:
 
 ```xml
@@ -64,11 +76,12 @@ convertErrorsToExceptions="true"
 convertNoticesToExceptions="true"
 convertWarningsToExceptions="true"
 printerClass="WUnit_ResultPrinter"
+printerFile="../extensions/wunit/PHPUnit/ResultPrinter.php"
 stopOnFailure="false"
 />
 ```
 
-**NOTICE** that ``printerClass="WUnit_ResultPrinter"`` is very important.
+**NOTICE** that ``printerClass`` and ``printerFile`` options are very important.
 
 5*) To test file uploading you should use UploadedFile class instead of CUploadedFile. Here is example:
 

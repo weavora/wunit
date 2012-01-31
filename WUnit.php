@@ -38,6 +38,7 @@ class WUnit extends CComponent
 			self::$config = $config;
 
 		$basePath = dirname(__FILE__);
+		require_once($basePath . '/Http/YiiExitException.php');
 		require_once($basePath . '/Http/YiiApplication.php');
 		require_once($basePath . '/UploadedFile.php');
 		require_once($basePath . '/PHPUnit/ResultPrinter.php');
