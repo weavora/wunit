@@ -55,7 +55,7 @@ require(dirname(__FILE__) . '/../extensions/wunit/WUnit.php');
 WUnit::createWebApplication($config);
 ```
 
-You should get something like:
+Finally you should get something like:
 
 ```ruby
 $yiit=dirname(__FILE__).'/../../../framework/yiit.php';
