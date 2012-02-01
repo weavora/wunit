@@ -37,13 +37,15 @@ class WUnit extends CComponent
 		if ($config !== null)
 			self::$config = $config;
 
-		spl_autoload_register(array(self, 'autoload'));
+		spl_autoload_register(array('WUnit', 'autoload'));
 
 		$basePath = dirname(__FILE__);
+
 		require_once($basePath . '/Http/YiiExitException.php');
 		require_once($basePath . '/Http/YiiApplication.php');
 		require_once($basePath . '/UploadedFile.php');
-		require_once($basePath . '/PHPUnit/ResultPrinter.php');
+		if (!defined('_PHP_INSULATE_'))
+			require_once($basePath . '/PHPUnit/ResultPrinter.php');
 		return new YiiApplication(self::$config);
 	}
 

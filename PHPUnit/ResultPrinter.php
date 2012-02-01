@@ -44,7 +44,7 @@
  */
 
 require_once 'PHP/Timer.php';
-
+require_once 'PHPUnit/Autoload.php';
 
 class WUnit_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
 {

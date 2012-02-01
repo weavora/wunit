@@ -76,12 +76,9 @@ class Client extends BaseClient
 		return <<<EOF
 <?php
 
+define('_PHP_INSULATE_', true);
 set_include_path('$includePaths');
-require_once 'fixtures/bootstrap.php';
-require_once '$basePath/WUnit.php';
-
-\$wunit = new WUnit();
-\$wunit->init();
+require_once 'bootstrap.php';
 
 \$request = unserialize('$request');
 
