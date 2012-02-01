@@ -135,4 +135,11 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		$this->assertRegExp('/before/is', $client->getResponse()->getContent());
 		$this->assertNotRegExp('/after/is', $client->getResponse()->getContent());
 	}
+
+	public function testRegisterShutdown()
+	{
+		$client = static::$wunit->createClient();
+		$client->request('GET', '/test/registerShutdown');
+		$this->assertNotRegExp('/shutdown/is', $client->getResponse()->getContent());
+	}
 }

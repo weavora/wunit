@@ -144,4 +144,14 @@ class TestController extends CController
 		echo "after<br>";
 	}
 
+	public function actionRegisterShutdown()
+	{
+		function shutdown()
+		{
+			echo "shutdown";
+		}
+
+		register_shutdown_function('shutdown');
+	}
+
 }

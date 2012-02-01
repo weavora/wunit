@@ -10,6 +10,8 @@ use WUnit\Http\YiiKernel;
 use WUnit\Http\YiiExitException;
 use WUnit\Http\YiiApplication;
 
+
+
 class WUnit extends CComponent
 {
 
@@ -22,8 +24,6 @@ class WUnit extends CComponent
 		error_reporting(E_ERROR);
 
 		$this->_basePath = dirname(__FILE__);
-
-		spl_autoload_register(array($this, 'autoload'));
 	}
 
 	public function createClient()
@@ -37,6 +37,8 @@ class WUnit extends CComponent
 		if ($config !== null)
 			self::$config = $config;
 
+		spl_autoload_register(array(self, 'autoload'));
+
 		$basePath = dirname(__FILE__);
 		require_once($basePath . '/Http/YiiExitException.php');
 		require_once($basePath . '/Http/YiiApplication.php');
@@ -45,12 +47,14 @@ class WUnit extends CComponent
 		return new YiiApplication(self::$config);
 	}
 
-	private function autoload($className)
+	public static function autoload($className)
 	{
+		$basePath = dirname(__FILE__);
 		$className = str_replace("Symfony\\Component\\", "", $className);
 		$className = str_replace("WUnit\\", "", $className);
+		$className = str_replace("\\", "/", $className);
 
-		$filePath = $this->_basePath . DIRECTORY_SEPARATOR . $className . ".php";
+		$filePath = $basePath . DIRECTORY_SEPARATOR . $className . ".php";
 
 		if (!file_exists($filePath))
 			return false;
