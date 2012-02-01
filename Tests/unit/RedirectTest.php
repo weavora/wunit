@@ -19,6 +19,7 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
 	public function testRedirect()
 	{
 		$client = static::$wunit->createClient();
+		$client->followRedirects(false);
 		$client->request('GET', '/test/redirect');
 
 		// or simply check that the response is a redirect to any URL
@@ -43,6 +44,10 @@ class RedirectTest extends \PHPUnit_Framework_TestCase
 
 		$client->request('GET', '/test/index');
 		$this->assertRegExp('/Congratulations\!/is', $client->getResponse()->getContent());
+
+		// by default followRedirects should be enabled
+		$client->request('GET', '/test/redirect');
+		$this->assertNotEmpty($client->getResponse()->getContent());
 
 		$client->followRedirects(false);
 		$client->request('GET', '/test/redirect');

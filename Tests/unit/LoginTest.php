@@ -28,7 +28,6 @@ class LoginTest extends \PHPUnit_Framework_TestCase
 	public function testLoginForm()
 	{
 		$client = static::$wunit->createClient();
-		$client->followRedirects(true);
 
 		$usermame = "demo";
 		$password = "demo";

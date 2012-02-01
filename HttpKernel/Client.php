@@ -45,7 +45,7 @@ class Client extends BaseClient
 
         parent::__construct($server, $history, $cookieJar);
 
-        $this->followRedirects = false;
+        $this->followRedirects = true;
     }
 
     /**
