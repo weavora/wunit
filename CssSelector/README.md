@@ -3,7 +3,7 @@ CssSelector Component
 
 CssSelector converts CSS selectors to XPath expressions.
 
-The component only goal is to convert CSS selectors to their XPath
+The component's only goal is to convert CSS selectors to their XPath
 equivalents:
 
     use Symfony\Component\CssSelector\CssSelector;
