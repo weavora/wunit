@@ -295,7 +295,7 @@ $crawler = $client->submit($form, array('name' => 'Chris'));
 
 The ``click()`` and ``submit()`` methods both return a ``Crawler`` object.
 These methods are the best way to browse your application as it takes care
-of a lot of things for you, like detecting the HTTP method from a form and
+of a lot of things for you, like detecting the HTTP method in a form and
 giving you a nice API for uploading files.
 
 
