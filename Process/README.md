@@ -16,8 +16,8 @@ In this example, we run a simple directory listing and get the result back:
 
     print $process->getOutput();
 
-You can think that this is easy to achieve with plain PHP but it's not especially
-if you want to take care of the subtle differences between the different platforms.
+You can think that it is easy to achieve with plain PHP but it's not really
+if you want to take care of the subtle differences between the platforms.
 
 And if you want to be able to get some feedback in real-time, just pass an
 anonymous function to the ``run()`` method and you will get the output buffer
