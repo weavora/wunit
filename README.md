@@ -5,10 +5,10 @@ Functional testing without Selenium
 -----------------------------------
 
 Would you like to create functional tests in [symfony2 style](http://symfony.com/doc/2.0/book/testing.html) without Selenium?
-What could be easier! Just install ``wunit`` extension.
+What could be easier! Just install the ``wunit`` extension.
 
-Note that ``wunit`` based on some ``symfony2`` classes and support all ``symfony2`` testing features
-(of course, except for directly related to ``symfony2`` core like profiling)
+Note that ``wunit`` is based on some ``symfony2`` classes and supports all ``symfony2`` testing features
+(of course, except for those directly related to ``symfony2`` core like profiling)
 
 Requirements
 -----------
@@ -20,7 +20,7 @@ Requirements
 Installation
 ------------
 
-1) Download and unpack source into protected/extensions/wunit folder.
+1) Download and unpack the source into the protected/extensions/wunit folder.
 
 2) Import wunit into test config (protected/config/**test.php**):
 
@@ -44,7 +44,7 @@ return array(
 
 3) Update protected/tests/bootstrap.php
 
-Replace line
+Replace the line
 ```
 Yii::createWebApplication($config);
 ```
@@ -55,7 +55,7 @@ require(dirname(__FILE__) . '/../extensions/wunit/WUnit.php');
 WUnit::createWebApplication($config);
 ```
 
-Finally you should get something like:
+Finally, you should get something like this:
 
 ```ruby
 $yiit=dirname(__FILE__).'/../../../framework/yiit.php';
@@ -83,7 +83,7 @@ stopOnFailure="false"
 
 **NOTICE** that ``printerClass`` and ``printerFile`` options are very important.
 
-5*) To test file uploading you should use UploadedFile class instead of CUploadedFile. Here is example:
+5*) To test file uploading you should use UploadedFile class instead of CUploadedFile. Here is an example:
 
 ```ruby
 # protected/config/main.php
@@ -108,14 +108,14 @@ public function actionFormWithFile() {
 }
 ```
 
-That's it. Now you can use create proper functional tests without Selenium :)
+That's it. Now you can use/create proper functional tests without Selenium :)
 
 
 Your First Functional Test
 --------------------------
 
-Functional tests are simple PHP files that typically live in the ``protected/tests/functional/`` folder.
-If you would like to test the pages handled by your ``SiteController`` class, start by creating
+Functional tests are simple PHP files that typically live in the the ``protected/tests/functional/`` folder.
+If you want to test the pages handled by your ``SiteController`` class, start by creating
 a new ``SiteControllerTest.php`` file that extends a special ``WUnitTestCase`` class.
 
 ```ruby
@@ -132,13 +132,13 @@ class SiteControllerTest extends WUnitTestCase
 }
 ```
 
-The ``createClient()`` method returns a client, which is like a browser that you'll use to crawl your site:
+The ``createClient()`` method returns a client that is like a browser that you'll use to crawl your site:
 
 ```ruby
 $crawler = $client->request('GET', '/site/index');
 ```
 
-The ``request()`` method returns a ``Crawler`` object which can be used to select elements in the Response, click on links, and submit forms.
+The ``request()`` method returns a ``Crawler`` object which can be used to select elements in the Response, click on links and submit forms.
 
 The Crawler only works when the response is an XML or an HTML document.
 To get the raw content response, call $client->getResponse()->getContent().
@@ -197,15 +197,14 @@ phpunit functional //run all tests from functional folder
 phpunit functional/SiteControllerTest.php // run specific test
 ```
 
-**NOTICE** WUnit do not require selenium, and if it is not installed on your environment
-then just comment out the following line in file protected/tests/bootstrap.php
+**NOTICE** WUnit does not require selenium, and if it is not installed on your environment, just comment out the following line in the file protected/tests/bootstrap.php
 
 ```ruby
 #protected/tests/bootstrap.php
 require_once(dirname(__FILE__).'/WebTestCase.php');
 ```
 
-# More about request() method
+# More about the request() method
 
 The full signature of the ``request()`` method is:
 
@@ -219,8 +218,8 @@ The full signature of the ``request()`` method is:
         $changeHistory = true
     )
 
-The ``server`` array is the raw values that you'd expect to normally
-find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`
+The ``server`` array is the raw values that you'd expect to be normally
+found in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`
 and `Referer` HTTP headers, you'd pass the following:
 
 ```ruby
