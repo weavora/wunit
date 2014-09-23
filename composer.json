@@ -15,7 +15,9 @@
     },
     "require": {
         "php":                      ">=5.3.0",
-        "phpunit/phpunit":          ">=3.6"
+        "phpunit/phpunit":          ">=3.6",
+        "symfony/http-foundation":  "*",
+        "symfony/browser-kit":      "*"
     },
     "autoload": {
         "psr-4": {
