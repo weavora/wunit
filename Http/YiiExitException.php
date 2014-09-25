@@ -16,5 +16,5 @@ namespace WUnit\Http;
  */
 class YiiExitException extends \Exception
 {
-    protected string $message = 'Yii::app()->end() was called';
+    protected $message = 'Yii::app()->end() was called';
 }
