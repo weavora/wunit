@@ -16,15 +16,30 @@
     "require": {
         "php":                      ">=5.3.0",
         "phpunit/phpunit":          ">=3.6",
-        "symfony/http-foundation":  "*",
-        "symfony/browser-kit":      "*"
+        "symfony/http-foundation":  "~2.0",
+        "symfony/browser-kit":      "~2.0"
+    },
+    "require-dev": {
+        "yiisoft/yii":              "1.1.*"
     },
     "autoload": {
         "psr-4": {
             "WUnit\\HttpKernel\\": "HttpKernel/",
             "WUnit\\Http\\": "Http/"
         },
-        "classmap": ["PHPUnit/"],
-        "files": ["UploadFile.php", "WUnit.php", "WUnitTestCase.php"]
+        "classmap": [
+            "vendor/yiisoft/yii/framework/base/",
+            "vendor/yiisoft/yii/framework/web/",
+            "PHPUnit/"
+        ],
+        "files": [
+            "UploadedFile.php",
+            "WUnit.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
