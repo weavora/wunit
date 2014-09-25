@@ -43,9 +43,6 @@
  * @since      File available since Release 2.0.0
  */
 
-require_once 'PHP/Timer.php';
-require_once 'PHPUnit/Autoload.php';
-
 class WUnit_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
 {
 	protected $outputBuffer = "";
@@ -78,7 +75,6 @@ class WUnit_ResultPrinter extends PHPUnit_TextUI_ResultPrinter
 
 	public function printResult(PHPUnit_Framework_TestResult $result)
     {
-
 		parent::printResult($result);
 		print $this->outputBuffer;
 	}
