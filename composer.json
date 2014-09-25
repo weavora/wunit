@@ -28,8 +28,6 @@
             "WUnit\\Http\\": "Http/"
         },
         "classmap": [
-            "vendor/yiisoft/yii/framework/base/",
-            "vendor/yiisoft/yii/framework/web/",
             "PHPUnit/"
         ],
         "files": [
