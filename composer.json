@@ -17,10 +17,14 @@
         "php":                      ">=5.3.0",
         "phpunit/phpunit":          ">=3.6",
         "symfony/http-foundation":  "~2.0",
-        "symfony/browser-kit":      "~2.0"
+        "symfony/browser-kit":      "~2.0",
+        "ext-xdebug":               ">=2.1.4"
     },
     "require-dev": {
         "yiisoft/yii":              "1.1.*"
+    },
+    "suggest": {
+        "ext-xdebug": ">=2.2.1"
     },
     "autoload": {
         "psr-4": {
