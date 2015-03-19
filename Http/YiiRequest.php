@@ -20,8 +20,7 @@ class YiiRequest extends \CHttpRequest
 
     public function inject(array $files = array())
     {
-        // @TODO Fix file uploads
-        //$_FILES = $this->filterFiles($files);
+        $_FILES = $this->filterFiles($files);
         if (empty($_SERVER['PHP_SELF'])) {
             $_SERVER['PHP_SELF'] = '/index.php';
         }
@@ -56,13 +55,6 @@ class YiiRequest extends \CHttpRequest
                 $filtered['type'][$key] = $value->getClientMimeType();
                 $filtered['size'][$key] = $value->getClientSize();
                 $filtered['error'][$key] = $value->getError();
-                // $filtered[$key] = array(
-                // 	'tmp_name' => $value->getPathname(),
-                // 	'name' => $value->getClientOriginalName(),
-                // 	'type' => $value->getClientMimeType(),
-                // 	'size' => $value->getClientSize(),
-                // 	'error' => $value->getError(),
-                // );
             }
         }
 
