@@ -28,13 +28,17 @@ class YiiKernel implements HttpKernelInterface
         $app->request->inject($request->files->all());
 
         $hasError = false;
+        $statusCode = null;
 
         ob_start();
         try {
             $app->processRequest();
         } catch (YiiExitException $exc) {
 
-        } catch (Exception $exc) {
+        } catch (\CHttpException $exc) {
+            $statusCode = $exc->statusCode;
+            $hasError = true;
+        } catch (\Exception $exc) {
             $hasError = true;
         }
 
@@ -49,7 +53,7 @@ class YiiKernel implements HttpKernelInterface
             $app->session->open();
         }
 
-        return new Response($content, $this->getStatusCode($headers, $hasError), $headers);
+        return new Response($content, $statusCode ?: $this->getStatusCode($headers, $hasError), $headers);
     }
 
     /**
