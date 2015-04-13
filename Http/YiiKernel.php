@@ -24,6 +24,7 @@ class YiiKernel implements HttpKernelInterface
     {
         $request->overrideGlobals();
         $app = \Yii::app();
+        $app->container->set('request', $request);
         $app->setComponent('request', new YiiRequest($request));
         $app->request->inject($request->files->all());
 
