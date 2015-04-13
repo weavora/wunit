@@ -46,8 +46,11 @@ class YiiRequest extends \CHttpRequest
     {
         $filtered = array();
         foreach ($files as $key => $value) {
-            if (is_array($value)) {
-                $filtered[$key] = $this->filterFiles($value);
+            if (is_array($value) && !empty($value)) {
+                $keyData = $this->filterFiles($value);
+                if (!empty($keyData)) {
+                    $filtered[$key] = $keyData;
+                }
             } elseif (is_object($value)) {
                 // Yii style :)
                 $filtered['tmp_name'][$key] = $value->getPathname();
