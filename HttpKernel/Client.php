@@ -57,6 +57,10 @@ class Client extends BaseClient
      */
     protected function doRequest($request)
     {
+        // Newer xdebug versions don't remove headers anymore when calling ´xdebug_get_headers()´.
+        // Hence we force it here before doing a new request.
+        header_remove();
+
         return $this->kernel->handle($request);
     }
 
