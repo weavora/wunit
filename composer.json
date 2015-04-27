@@ -1,0 +1,47 @@
+{
+    "name": "weavora/wunit",
+    "description": "Yii functional testing without Selenium.",
+    "type": "library",
+    "keywords": ["testing", "functional", "yii"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yury Tolochko"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/weavora/wunit/issues",
+        "source": "https://github.com/weavora/wunit"
+    },
+    "require": {
+        "php":                      ">=5.3.0",
+        "phpunit/phpunit":          ">=3.6",
+        "symfony/http-foundation":  "~2.0",
+        "symfony/browser-kit":      "~2.0",
+        "ext-xdebug":               ">=2.1.4"
+    },
+    "require-dev": {
+        "yiisoft/yii":              "1.1.*"
+    },
+    "suggest": {
+        "ext-xdebug": ">=2.2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "WUnit\\HttpKernel\\": "HttpKernel/",
+            "WUnit\\Http\\": "Http/"
+        },
+        "classmap": [
+            "PHPUnit/"
+        ],
+        "files": [
+            "UploadedFile.php",
+            "WUnit.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

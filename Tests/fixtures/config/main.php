@@ -5,6 +5,13 @@
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
+
+# Fix autoloader stack order. Yii should be invoked last because
+# it throws errors when a class was not found.
+spl_autoload_unregister(array('YiiBase', 'autoload'));
+require_once __DIR__ . '/../../../vendor/autoload.php';
+spl_autoload_register(array('YiiBase', 'autoload'));
+
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Web Application',
@@ -43,7 +50,7 @@ return array(
 		//	'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		//),
 		// uncomment the following to use a MySQL database
-		
+
 //		'db'=>array(
 //			'connectionString' => 'mysql:host=weavora-1;dbname=wfrom2',
 //			'emulatePrepare' => true,

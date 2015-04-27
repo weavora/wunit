@@ -51,12 +51,16 @@ class Client extends BaseClient
     /**
      * Makes a request.
      *
-     * @param Request  $request A Request instance
+     * @param Request $request A Request instance
      *
      * @return Response A Response instance
      */
     protected function doRequest($request)
     {
+        // Newer xdebug versions don't remove headers anymore when calling ´xdebug_get_headers()´.
+        // Hence we force it here before doing a new request.
+        header_remove();
+
         return $this->kernel->handle($request);
     }
 
@@ -67,13 +71,12 @@ class Client extends BaseClient
      */
     protected function getScript($request)
     {
-		$app =  str_replace("'", "\\'", serialize(\Yii::app()));
-		$request = str_replace("'", "\\'", serialize($request));
-		$basePath = dirname(__FILE_) . "/..";
-		$includePaths = get_include_path();
+        $app =  str_replace("'", "\\'", serialize(\Yii::app()));
+        $request = str_replace("'", "\\'", serialize($request));
+        $basePath = dirname(__FILE_) . "/..";
+        $includePaths = get_include_path();
 
-
-		return <<<EOF
+        return <<<EOF
 <?php
 
 define('_PHP_INSULATE_', true);

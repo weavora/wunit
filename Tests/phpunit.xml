@@ -6,6 +6,12 @@
 		printerFile="../PHPUnit/ResultPrinter.php"
 		stopOnFailure="false"
 		verbose="true"
-		strict="true"
+		strict="false"
 		>
+		<testsuites>
+			<testsuite name="unit">
+	            <directory>unit</directory>
+	        </testsuite>
+
+	    </testsuites>
 </phpunit>
